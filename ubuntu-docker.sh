@@ -20,7 +20,10 @@ if [ ! -x /var/lib/docker ]; then
     $(lsb_release -cs) stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
   sudo apt-get update -y
   sudo apt-get install -y docker-ce docker-ce-cli containerd.io docker-compose-plugin
-  sudo systemctl enable docker
+  sudo groupadd docker
+  sudo usermod -aG docker $USER
+  sudo systemctl enable docker.service
+  sudo systemctl enable containerd.service
   echo "Docker successfully installed"
 
   # Docker Compose
